@@ -29,7 +29,6 @@
   },
   "description": "Final Year Project",
   "main": "app.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AnhTRJotnar/GMTC.git"
