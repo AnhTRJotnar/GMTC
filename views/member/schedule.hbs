@@ -1,0 +1,50 @@
+<body>  
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Schedule</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="about-section text-center" id="about">
+        <div class="container">
+            <div id='calendar'></div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: new Date(),
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center:'title',
+                    right: 'dayGridMonth, timeGridWeek, timeGridDay'
+                    },
+                eventSources: [
+                    {
+                        url: '/class/class-events-data', 
+                        color: 'red',
+                        textColor: 'white' 
+                    },
+                    {
+                        url: '/class/classData',
+                        color: 'red',
+                        textColor: 'white'
+                    },
+                    {
+                        url: '/coach/bookingData',
+                        color: 'blue',
+                        textColor: 'white'
+                    }
+                ]  
+            });
+            calendar.render();
+        });
+        </script>
+</body>
+</html>

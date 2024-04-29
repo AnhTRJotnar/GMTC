@@ -1,0 +1,71 @@
+<body id="page-top" class="bg-dark">
+    <!-- Header Section -->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase text-white">Create a New Class</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                <h4 class="text-center font-weight-bold">Create Another User</h4>
+                <!-- Display Errors -->
+                {{#if errors}}
+                    <div class="alert alert-danger mt-3">
+                        <ul>
+                            {{#each errors}}
+                                <li>{{this}}</li> <!-- Display each error message -->
+                            {{/each}}
+                        </ul>
+                    </div>
+                {{/if}}
+                <form method="post" enctype="multipart/form-data" onsubmit="return checkPass();">
+                    <!-- Username Field -->
+                    <div class="form-group mb-4">
+                        <label for="username"><b>Username</b></label>
+                        <input type="text" class="form-control" name="username" id="username" required>
+                        {{#if InputErrors.username}}
+                            <div class="alert alert-danger" role="alert">
+                                {{InputErrors.username}}
+                            </div>
+                        {{/if}}
+                    </div>
+                    <!-- Password Field -->
+                    <div class="form-group mb-4">
+                        <label for="password"><b>Password</b></label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                    </div>
+                    <!-- Repeat Password Field -->
+                    <div class="form-group mb-4">
+                        <label for="psw-repeat"><b>Repeat Password</b></label>
+                        <input type="password" class="form-control" name="psw-repeat" id="retype" required>
+                        <span id="retype_error" class="error text-danger"></span>
+                    </div>
+                    <!-- Role Selection -->
+                    <div class="form-group mb-4">
+                        <label for="role"><b>Role</b></label>
+                        <select class="form-control" name="role" id="role">
+                            <option value="coach">Coach</option>
+                            <option value="student">Student</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <!-- File Upload Field -->
+                    <div class="form-group mb-4">
+                        <label for="image"><b>Profile Image</b></label>
+                        <input type="file" class="form-control" name="image" id="image">
+                    </div>
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <input type="submit" class="btn btn-primary" value="Create">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

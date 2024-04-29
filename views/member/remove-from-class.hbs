@@ -1,0 +1,11 @@
+<!-- views/member/remove-from-class.hbs -->
+<h1>Remove Member from Class</h1>
+<form action="/member/{{member._id}}/class/remove" method="post">
+  <label>Select Class:</label>
+  <select name="classId">
+    {{#each member.classes}}
+      <option value="{{this._id}}">{{this.title}}</option>
+    {{/each}}
+  </select>
+  <button type="submit">Remove from Class</button>
+</form>

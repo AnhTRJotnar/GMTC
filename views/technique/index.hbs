@@ -1,0 +1,113 @@
+<body id="page-top" class="bg-dark"> <!-- Consistent background -->
+
+    <!-- Page Header -->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Resources</h1> <!-- Centralized header text -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <div class="container mt-4 mb-5"> <!-- Outer container for consistent spacing -->
+        <div class="row justify-content-center"> <!-- Center the content horizontally -->
+            <div class="col-md-8"> <!-- Content width and alignment -->
+                <!-- Form for Adding a New Technique -->
+                {{#if (eq role "coach")}}
+                <div class="bg-white p-4 rounded mt-4"> <!-- Consistent container style -->
+                    <h2 class="text-dark">Add New Resource</h2> <!-- Consistent header style -->
+                    <form action="/technique/add"  enctype="multipart/form-data" method="post">
+                        <input type="hidden" name="userId" value="{{ userId }}">
+                        <div class="form-group">
+                            <input type="text" placeholder="Name" name="name" id="name" class="form-control" required> <!-- Consistent input styling -->
+                        </div>
+                        <div class="form-group">
+                            <textarea name="description" placeholder="Description" id="description" class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="url" placeholder="Youtube URL" name="videoUrl" class="form-control"> <!-- Consistent styling -->
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="media" class="form-control" accept="image/*,video/mp4">
+                        </div>
+                        <div class="d-grid"> <!-- Consistent button alignment -->
+                            <button type="submit" class="btn btn-primary">Add Technique</button> <!-- Consistent button style -->
+                        </div>
+                    </form>
+                </div>
+                {{/if}}
+
+                <!-- List of All Techniques -->
+                <div class="bg-dark p-4 rounded mt-4"> <!-- Consistent container styling -->
+                    <div class="row"> <!-- Row to contain the technique cards -->
+                        {{#each TechniqueList}}
+                        <div class="col-md-12 mb-3"> <!-- Column for each technique card -->
+                            <div class="card"> <!-- Technique card -->
+                                <div class="card-body"> <!-- Card body -->
+                                    <div class="d-flex flex-row justify-content-between align-items-center"> <!-- Align elements -->
+                                        <!-- User Information -->
+                                        <div class="d-flex flex-row align-items-center">
+                                            <img class="rounded-circle" src="/images/{{userId.image}}" width="45"> <!-- User profile picture -->
+                                            <div class="d-flex flex-column ml-2"> <!-- Username and additional info -->
+                                                <strong>{{userId.username}}</strong> <!-- Consistent font weight -->
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Three-Dot Dropdown for Edit/Delete -->
+                                        <div class="dropdown"> <!-- Dropdown menu -->
+                                            <button
+                                                class="btn btn-link dropdown-toggle"
+                                                type="button"
+                                                data-toggle="dropdown"
+                                                aria-haspopup="true"
+                                                aria-expanded="false"
+                                            >
+                                                <i class="fa fa-ellipsis-v text-black-50"></i> <!-- Three-dot icon -->
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="/technique/edit/{{_id}}">Edit</a> <!-- Link to edit -->
+                                                <a class="dropdown-item" href="/technique/delete/{{_id}}" onclick="return confirm('Are you sure you want to delete this technique?')">Delete</a> <!-- Link to delete -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Technique Details -->
+                                    <div class="d-flex flex-column text-left">
+                                        <span class="font-weight-bold">{{name}}</span>
+                                        <span>{{description}}</span>
+                                        {{#if videoUrl}}
+                                            <div class="text-center mt-2">
+                                                <iframe width="560" height="315" src="{{videoUrl}}" frameborder="0" allowfullscreen></iframe>
+                                            </div>
+                                        {{/if}}
+                                        {{#if media}}
+                                            {{#if (eq mediaType 'video')}}
+                                                <video controls class="img-fluid img-responsive">
+                                                    <source src="/videos/{{ media }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                            {{else}}
+                                                <img class="img-fluid img-responsive" src="/images/{{ media }}">
+                                            {{/if}}
+                                        {{/if}}
+                                    </div>
+                                </div> <!-- End of card body -->
+                            </div> <!-- End of card -->
+                        </div> <!-- End of column -->
+                        {{/each}}
+                    </div> <!-- End of row -->
+                </div> <!-- End of technique list container -->
+
+            </div> <!-- End of Column -->
+        </div> <!-- End of Row -->
+    </div> <!-- End of Container -->
+
+    <!-- Bootstrap JavaScript for interactivity -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JS -->
+    
+</body>
+</html>

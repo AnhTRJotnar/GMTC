@@ -1,0 +1,131 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Font Awesome -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap CSS -->
+
+<!-- Page with form and posts section -->
+<body id="page-top" class="bg-dark">
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Community Hub</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8"> <!-- Content section -->
+
+                <!-- Form for posting -->
+                <div class="feed p-4 bg-white border mb-3">
+                    <form method="post" enctype="multipart/form-data" onsubmit="return checkPass();">
+                        <input type="hidden" name="userId" value="{{ userId }}">
+                        <div class="form-group">
+                            <textarea name="description" class="form-control" placeholder="What's on your mind?" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" name="media" class="form-control" accept="image/*,video/mp4">
+                        </div>
+                        <div class="d-grid"> <!-- Submit button alignment -->
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Posts section -->
+                {{#each PostList }}
+                <div class="bg-white border mt-2">
+                    <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                        <div class="d-flex flex-row align-items-center feed-text px-2">
+                            <img class="rounded-circle" src="/images/{{userId.image}}" width="45">
+                            <div class="d-flex flex-column ml-2">
+                                <span class="fw-bold mb-1">{{ userId.username }}</span>
+                                <span class="text-black-50 time">{{ formattedDate }}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Dropdown for edit/delete actions -->
+                        <div class="dropdown feed-icon px-2">
+                            <button
+                                class="btn btn-link dropdown-toggle"
+                                type="button"
+                                id="postActionsMenu"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
+                                <i class="fa fa-ellipsis-v text-black-50"></i> <!-- Three-dot menu -->
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="postActionsMenu">
+                                <a class="dropdown-item" href="/post/edit/{{ _id }}">Edit</a>
+                                <a class="dropdown-item" href="/post/delete/{{ _id }}">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-2 px-3"><span>{{ description }}</span></div>
+                    <div class="feed-media p-2 px-3">
+                        {{#if media}}
+                            {{#if (eq mediaType 'video')}}
+                                <video controls class="img-fluid img-responsive">
+                                    <source src="/videos/{{ media }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            {{else}}
+                                <img class="img-fluid img-responsive" src="/images/{{ media }}">
+                            {{/if}}
+                        {{/if}}
+                    </div>
+                    <!-- Comment section -->
+                    <div class="comment-section">
+                        <form method="post" class="comment-form" action="/post/comments">
+                            <input type="hidden" name="postId" value="{{ _id }}">
+                            <div class="mb-2 d-flex">
+                                <textarea name="content" placeholder="Add a comment..." class="form-control flex-grow-1 me-2" rows="2" required></textarea>
+                                <button type="submit" class="btn btn-primary btn-sm">Post</button>
+                            </div>
+                        </form>
+                        {{#each comments}}
+                        <div class="comment">
+                            <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
+                                <div class="d-flex flex-row align-items-center feed-text px-2">
+                                    <img class="rounded-circle" src="/images/{{userId.image}}" width="45">
+                                    <div class="comment-content ml-2">
+                                        <p class="fw-bold mb-1">{{ userId.username }}</p>
+                                        <p class="mb-0">{{ content }}</p>
+                                    </div>
+                                </div>
+                                <!-- Dropdown for comment edit/delete actions -->
+                                <div class="dropdown feed-icon px-2">
+                                    <button
+                                        class="btn btn-link dropdown-toggle"
+                                        type="button"
+                                        id="commentActionsMenu"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                    >
+                                        <i class="fa fa-ellipsis-v text-black-50"></i> <!-- Three-dot menu -->
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="commentActionsMenu">
+                                        <a class="dropdown-item" href="/comment/edit/{{ _id }}">Edit</a>
+                                        <a class="dropdown-item" href="/post/cmtdelete/{{ _id }}">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                {{else}}
+                <p class="no-posts">No posts found.</p>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JS -->
+</body>

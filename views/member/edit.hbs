@@ -1,0 +1,53 @@
+<header class="masthead">
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+        <div class="d-flex justify-content-center">
+            <div class="text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Edit users</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title mb-4">Edit User</h2>
+            <form action="/member/edit/{{user._id}}" method="post" enctype="multipart/form-data">
+                <!-- Username -->
+                <div class="form-group mb-3">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{user.username}}" required>
+                </div>
+
+                <!-- Role -->
+                <div class="form-group mb-3">
+                    <label for="role">Role:</label>
+                    <select class="form-control" id="role" name="role">
+                        {{#each role}}
+                            <option value="{{this}}" {{#if (eq this ../user.role)}}selected{{/if}}>{{this}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <!-- New Password -->
+                <div class="form-group mb-3">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Enter new password">
+                    <small class="form-text text-muted">Leave blank to keep current password.</small>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="form-group mb-3">
+                    <label for="image">Profile Picture:</label>
+                    <input type="file" class="form-control" id="image" name="image">
+                    <small class="form-text text-muted">Upload a new profile picture.</small>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Update User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Report</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
+    <style>
+    body {
+        background-color: #f8f9fa; /* Light background */
+        color: #343a40; /* Dark text */
+    }
+
+    .report-container {
+        margin-top: 40px; /* Increased top margin for spacing */
+    }
+
+    .chart-wrapper {
+        width: 100%; 
+        height: 400px;
+        max-width: 10000px; /* Increased maximum width for larger charts */
+        margin: 0 auto; /* Center the chart */
+        padding: 20px; /* Additional padding for spacing */
+    }
+
+    .chart-container {
+        padding: 20px; /* Increased padding for each chart */
+        background-color: #ffffff; /* White background */
+        border-radius: 10px; /* Rounded corners */
+        height: 100%;
+        box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1); /* Slightly larger shadow */
+    }
+
+    h1 {
+        text-align: center; /* Center the heading */
+        color: #343a40; /* Dark gray text */
+    }
+
+    .btn {
+        margin-top: 10px; /* Space between buttons */
+    }
+</style>
+
+</head>
+<body id="page-top" class="">
+    <!-- Header Section -->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase text-white">statistics</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container report-container"> <!-- Main container -->
+
+        <!-- Section for summary statistics -->
+        <div class="row text-center">
+            <div class="col-md-3"> <!-- Display the number of members -->
+                <h3>Members</h3>
+                <p>{{numMembers}}</p>
+            </div>
+            <div class="col-md-3"> <!-- Display the number of classes -->
+                <h3>Classes</h3>
+                <p>{{numClasses}}</p>
+            </div>
+            <div class="col-md-3"> <!-- Display the number of posts -->
+                <h3>Posts</h3>
+                <p>{{numPosts}}</p>
+            </div>
+            <div class="col-md-3"> <!-- Display the number of resources -->
+                <h3>Resources</h3>
+                <p>{{numResources}}</p>
+            </div>
+        </div>
+
+        <!-- Section for displaying a bar chart -->
+        <div class="chart-wrapper">
+            <div class="chart-container"> <!-- Chart container with shadow and padding -->
+                <canvas id="reportChart"></canvas> <!-- Chart canvas -->
+            </div>
+        </div>
+
+        <!-- Script to generate the chart -->
+        <script>
+            const ctx = document.getElementById('reportChart').getContext('2d');
+            const chartData = {
+                labels: ['Members', 'Classes', 'Posts', 'Resources'], 
+                datasets: [{
+                    label: 'Counts',
+                    data: [{{numMembers}}, {{numClasses}}, {{numPosts}}, {{numResources}}],
+                    backgroundColor: ['#e74c3c', '#3498db', '#2ecc71', '#f39c12'],
+                    borderColor: ['#c0392b', '#2980b9', '#27ae60', '#e67e22'],
+                    borderWidth: 1
+                }]
+            };
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                color: '#343a40'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#343a40'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#343a40'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

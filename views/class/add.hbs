@@ -1,0 +1,147 @@
+<!-- Importing Bootstrap and Font Awesome for consistency -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<body id="page-top" class="bg-dark">
+    <!-- Header Section -->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase text-white">Create a New Class</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="container mt-4 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8"> <!-- Content Section -->
+
+                <!-- Form for Adding a New Class -->
+                <div class="bg-white border p-4"> <!-- White background for the form -->
+                    <!-- Error Handling -->
+                    {{#if inputErrors}}
+                    <div class="alert alert-danger">
+                        {{#each inputErrors}}
+                        <p>{{this}}</p>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+
+                    <!-- Class Form -->
+                    <form action="/class/add" method="post">
+                    {{#if errors}}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {{#each errors}}
+                                    <li>{{this}}</li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                        <!-- Class Title -->
+                        <div class="form-group mb-3">
+                            <label for="title">Class Title:</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                name="title"
+                                value="{{classData.title}}"
+                                required
+                            />
+                        </div>
+
+                        <!-- Class Description -->
+                        <div class="form-group mb-3">
+                            <label for="description">Class Description:</label>
+                            <textarea
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                rows="3"
+                                required
+                            >{{classData.description}}</textarea>
+                        </div>
+
+                        <!-- Days of the Week -->
+                        <fieldset class="form-group mb-3">
+                            <legend>Select Days of the Week:</legend>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="daysOfWeek" value="0" id="sunday">
+                                <label class="form-check-label" for="sunday">Sunday</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="daysOfWeek" value="1" id="monday">
+                                <label class="form-check-label" for="monday">Monday</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="daysOfWeek" value="2" id="monday">
+                                <label class="form-check-label" for="monday">Tuesday</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="daysOfWeek" value="3" id="monday">
+                                <label class="form-check-label" for="monday">Wednesday</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="daysOfWeek" value="4" id="monday">
+                                <label class="form-check-label" for="monday">Thursday</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="daysOfWeek" value="5" id="monday">
+                                <label class="form-check-label" for="monday">Friday</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" name="daysOfWeek" value="6" id="monday">
+                                <label class="form-check-label" for="monday">Saturday</label>
+                            </div>
+                            <!-- Additional days omitted for brevity -->
+                        </fieldset>
+
+                        <!-- Class Timing -->
+                        <div class="form-group mb-3">
+                            <label for="startTime">Start Time:</label>
+                            <input type="time" class="form-control" id="startTime" name="startTime" value="{{classData.startTime}}" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="endTime">End Time:</label>
+                            <input type="time" class="form-control" id="endTime" name="endTime" value="{{classData.endTime}}" required>
+                        </div>
+
+                        <!-- Recurring Dates -->
+                        <div class="form-group mb-3">
+                            <label for="startRecur">Start Recurring Date:</label>
+                            <input type="date" class="form-control" id="startRecur" name="startRecur" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="endRecur">End Recurring Date:</label>
+                            <input type="date" class="form-control" id="endRecur" name="endRecur" required>
+                        </div>
+
+                        <!-- Inviting Students -->
+                        <h3>Invite Students</h3>
+                        {{#each users}}
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="members" value="{{this._id}}">
+                            <label class="form-check-label" for="user-{{this._id}}">{{this.username}}</label>
+                        </div>
+                        {{/each}}
+
+                        <!-- Submit Button -->
+                        <div class="d-grid"> <!-- Align the button to center -->
+                            <button type="submit" class="btn btn-primary">Add Class</button>
+                        </div>
+                    </form>
+                </div> <!-- End of form section -->
+            </div> <!-- End of content section -->
+        </div> <!-- End of row -->
+    </div> <!-- End of container -->
+
+    <!-- Including Bootstrap and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script> <!-- Bootstrap JS -->
+</body>

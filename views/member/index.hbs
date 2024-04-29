@@ -1,0 +1,54 @@
+<!-- Header Section -->
+<header class="masthead">
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+        <div class="d-flex justify-content-center">
+            <div class="text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Members</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content Section -->
+<div class="container mt-5">
+    <!-- Members Table -->
+    <div class="table-responsive"> <!-- Responsive table for smaller screens -->
+        <table class="table table-striped table-bordered"> <!-- Adding borders and alternating row colors -->
+            <thead class="bg-dark text-white"> <!-- Dark background for the table header -->
+                <tr>
+                    <th>Member Name</th>
+                    <th>Role</th>
+                    <th>Image</th>
+                    <th>Class</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each UserList}}
+                <tr>
+                    <td>{{username}}</td>
+                    <td>{{role}}</td>
+                    <td>
+                        <img src="images/{{ image }}" alt="{{ username }}'s image" width="100" height="100" > <!-- Rounded image -->
+                    </td>
+                    <td>
+                        {{#each classes}}
+                            {{this.title}} {{#unless @last}}, {{/unless}}
+                        {{/each}}
+                    </td>
+                    <td>
+                        <!-- Action buttons with additional styling -->
+                        <a class="btn btn-primary btn-sm" href="/member/edit/{{_id}}">Edit</a>
+                        <a class="btn btn-secondary btn-sm" href="/member/addToClass/{{_id}}">Add to Class</a>
+                        <a class="btn btn-danger btn-sm" href="/member/delete/{{_id}}" onclick="return confirm('Do you really want to remove this member?')">Remove</a>
+                    </td>
+                </tr>
+                {{else}}
+                <tr>
+                    <td colspan="5" class="text-center">No members found.</td> <!-- Aligning the text in the middle -->
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div> <!-- End of table-responsive -->
+</div> <!-- End of container -->

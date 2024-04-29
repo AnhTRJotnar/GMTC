@@ -1,0 +1,11 @@
+<!-- views/class/edit.hbs -->
+<h1>Edit Class</h1>
+<form action="/class/update/{{class._id}}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" value="{{class.title}}" required>
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description">{{class.description}}</textarea>
+    
+    <button type="submit">Update Class</button>
+</form>

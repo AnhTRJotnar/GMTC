@@ -1,0 +1,33 @@
+<header class="masthead">
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+        <div class="d-flex justify-content-center">
+            <div class="text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Add members to class</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">Add User to Class</h2>
+            <p class="card-text">Please select the class to add this user to:</p>
+            <form action="/member/addToClass/{{user._id}}" method="post">
+                <div class="form-group">
+                    <label for="classId">Select Class:</label>
+                    <select class="form-control" id="classId" name="classId" required>
+                        <option value="">-- Please choose a class --</option>
+                        {{#each classes}}
+                            <option value="{{this._id}}">{{this.title}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-primary">Add User to Class</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

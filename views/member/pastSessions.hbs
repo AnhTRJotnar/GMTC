@@ -1,0 +1,78 @@
+ <!-- Coaches Section -->
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Sessions</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Booked Sessions Section -->
+    <section class="booked-sessions-section" id="sessions">
+        <div class="container px-4 px-lg-5">
+            <h2 class="text-center text-danger mb-4">Your Booked Sessions</h2>
+            <p class="lead text-center mb-5">Remember to give your coach a rating!</p>
+
+            {{#if MyBookingList.length}}
+                {{#each MyBookingList}}
+                    <!-- Session Row -->
+                    <div class="row gx-0 mb-5 align-items-center">
+                        <!-- Image and Text order alternates for each session -->
+                        <div class="{{#if @first}}col-lg-6{{else}}col-lg-6 order-lg-first{{/if}}">
+                            <div class="session-text text-center text-lg-left">
+                                <h4>Session with: {{coachId.username}}</h4>
+                                <p><strong>Starts:</strong> {{formatDate this.start}}</p>
+                                <p><strong>Ends:</strong> {{formatDate this.end}}</p>
+                                <span class="badge
+                                    {{#if (eq this.status 'pending')}}
+                                        bg-warning
+                                    {{else if (eq this.status 'complete')}}
+                                        bg-primary 
+                                    {{else if (eq this.status 'accepted')}}
+                                        bg-success
+                                    {{else if (eq this.status 'rejected')}}
+                                        bg-danger
+                                    {{/if}}
+                                    ">
+                                    {{this.status}}
+                                </span>
+                                <hr>
+                                {{#if (eq this.status 'complete')}}
+                                <div style="max-width: 600px; width: 100%;"> <!-- Set a maximum width and fill parent width -->
+                                    <form action="/member/rate-coach" method="post" style="padding: 0;"> <!-- Remove padding to avoid outline -->
+                                        <input type="hidden" name="bookingId" value="{{_id}}"> <!-- Ensure bookingId is not empty -->
+                                        <!-- Star-based rating centered -->
+                                        <div class="text-center mb-3"> <!-- Centering content -->
+                                            <label for="rating" class="form-label">Rating (1-5):</label>
+                                            <div>
+                                                <input type="radio" name="rating" value="1" required> 1
+                                                <input type="radio" name="rating" value="2"> 2
+                                                <input type="radio" name="rating" value="3"> 3
+                                                <input type="radio" name="rating" value="4"> 4
+                                                <input type="radio" name="rating" value="5"> 5
+                                            </div>
+                                        </div>
+                                        <!-- Styled submit button centered -->
+                                        <div class="text-center"> <!-- Centering content -->
+                                            <button type="submit" class="btn btn-primary">Submit Rating</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                        <div class="col-lg-6">
+                            <!-- Replace with appropriate image for each session -->
+                            <img class="img-fluid" src="/images/pic.jpg" alt="Session Image"/>
+                        </div>
+                    </div>
+                {{/each}}
+            {{else}}
+                <div class="col-12">
+                    <p class="text-center">You have no booked sessions.</p>
+                </div>
+            {{/if}}
+        </div>
+    </section>

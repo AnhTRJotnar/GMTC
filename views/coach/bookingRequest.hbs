@@ -1,0 +1,62 @@
+<body id="page-top">
+    <header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Booking Requests & Ratings</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Booking Requests Section -->
+    <section class="container my-5 py-4 bg-light border rounded shadow-sm">
+        <h2 class="text-center text-danger mb-4">Your Booking Requests</h2>
+        <p class="lead text-center mb-5">Review and respond to booking requests</p>
+
+        <!-- Display booking requests -->
+        <div class="row g-4 justify-content-center">
+            {{#if bookings.length}}
+                {{#each bookings}}
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 border-danger">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong>Booking with: </strong>{{studentId.username}}</h5>
+                            <p class="card-text"><strong>Session Start:</strong> {{formatDate start}}</p>
+                            <p class="card-text"><strong>Session End:</strong> {{formatDate end}}</p>
+                            <span class="badge
+                                {{#if (eq this.status 'pending')}}
+                                    bg-warning
+                                {{else if (eq this.status 'complete')}}
+                                    bg-primary 
+                                {{else if (eq this.status 'accepted')}}
+                                    bg-success
+                                {{else if (eq this.status 'rejected')}}
+                                    bg-danger
+                                {{/if}}
+                                ">
+                                {{this.status}}
+                            </span>
+
+
+                            {{#if this.rating}} <!-- Check if a rating exists -->
+                                <p><strong>Rating:</strong> {{this.rating}}/5</p> <!-- Display the rating -->
+                            {{else}}
+                                <p>No rating yet.</p> <!-- If no rating exists -->
+                            {{/if}}
+                        </div>
+                        {{#if (eq status 'pending')}} <!-- Only show buttons if status is 'pending' -->
+                        <div class="card-footer bg-white border-danger">
+                            <form action="/coach/accept-booking/{{this._id}}" method="post">
+                                <button type="submit" class="btn btn-danger w-100">Accept Booking</button>
+                            </form>
+                            <form action="/coach/reject-booking/{{this._id}}" method="post">
+                                <button type="submit" class="btn btn-danger w-100">Reject Booking</button>
+                            </form>
+                        </div>
+                        {{/if}} <!-- End conditional check for 'pending' -->
+                    </div>
+                </div>
+                {{/each}}
+            {{/if}}
+        </div>
+    </section>
+</body>

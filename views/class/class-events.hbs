@@ -1,0 +1,74 @@
+<header class="masthead">
+        <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
+            <div class="d-flex justify-content-center">
+                <div class="text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Schedule</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="about-section text-center" id="about">
+        <div class="container">
+            <div id='calendar'></div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: new Date(),
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth, timeGridWeek, timeGridDay'
+                },
+                eventSources: [
+                    {
+                        url: '/class/classData',
+                        color: 'white',
+                        textColor: 'black',
+                        failure: function() {
+                            console.error('Failed to fetch events from /class/classData');
+                        }
+                    },
+                    {
+                        url: '/coach/bookingData',
+                        color: 'blue',
+                        textColor: 'white',
+                        failure: function() {
+                            console.error('Failed to fetch events from /coach/bookingData');
+                        }
+                    }
+                ],
+                eventTimeFormat: { // format events in event source
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    meridiem: false // to hide AM/PM
+                },
+                timeFormat: { // format time slot labels
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    meridiem: false // to hide AM/PM
+                },
+                eventRender: function(info) {
+                    // Ensure that start and end times are converted to Date objects
+                    var startTime = new Date(info.event.start);
+                    var endTime = new Date(info.event.end);
+
+                    // Format the start and end times using toLocaleTimeString
+                    var formattedStartTime = startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                    var formattedEndTime = endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+
+                    // Set the formatted times to the event element
+                    info.el.querySelector('.fc-time').innerHTML = formattedStartTime + ' - ' + formattedEndTime;
+                }
+            });
+            calendar.render();
+        });
+
+
+
+    </script>
+</section>
