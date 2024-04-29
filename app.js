@@ -19,8 +19,6 @@ cron.schedule('* * * * *', () => { // Runs every hour
 // Set up routes and middleware
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/member');
-var productRouter = require('./routes/product');
-var categoryRouter = require('./routes/category');
 var authRouter = require('./routes/auth');
 var memberRouter = require('./routes/member');
 var classRouter = require('./routes/class');
@@ -101,8 +99,6 @@ app.use((req, res, next) => {
 // Route handling
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/category', categoryRouter);
-app.use('/product', productRouter);
 app.use('/auth', authRouter);
 app.use('/member', memberRouter);
 app.use('/class', classRouter);
