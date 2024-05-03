@@ -45,6 +45,12 @@ router.get('/', checkLoginSession, checkAdminSession, async (req, res) => {
     res.render('member', { UserList });
 });
 
+router.post('/search', async (req, res) => {
+    var kw = req.body.keyword;
+    var UserList = await UserModel.find({ username: new RegExp(kw, "i") }).populate('classes');
+    res.render('member/index', { UserList })
+})
+
 //add members
 router.get('/add', checkAdminSession, checkLoginSession, async (req, res) => {
     res.render('auth/register');

@@ -59,12 +59,6 @@ mongoose.connect(uri)
   .then(() => console.log('Connected to DB'))
   .catch((err) => console.log('Error: ' + err));
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
-
 // Configure body-parser
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));

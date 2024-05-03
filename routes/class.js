@@ -53,34 +53,6 @@ router.get('/add', checkAdminSession, async (req, res) => {
     res.render('class/add', {users});
 })
 
-// router.post('/add', checkAdminSession, async (req, res) => {
-//     try {
-//         var { title, description, daysOfWeek, startTime, endTime, startRecur, endRecur, members } = req.body;
-
-//         if (!Array.isArray(daysOfWeek)) {
-//             // If it's a single day, convert it to an array
-//             daysOfWeek = [daysOfWeek];
-//         }   
-
-//         var newClass = new ClassModel({
-//             title,
-//             description,
-//             daysOfWeek: daysOfWeek.map(Number), // Ensure daysOfWeek is an array of numbers
-//             startTime,
-//             endTime,
-//             startRecur: new Date(startRecur), // Convert to Date object
-//             endRecur: new Date(endRecur),      // Convert to Date objects
-//             members: Array.isArray(members) ? members : [members],
-//         });
-
-//         await newClass.save();
-//         console.log(newClass);
-//         res.redirect('/class'); // Redirect to the class listing page
-//     } catch (error) {
-//         console.error('Error adding new class:', error);
-//     }
-// });
-
 router.post('/add', checkAdminSession, classValidation, async (req, res) => {
     try {
         const validationErrors = validationResult(req);
